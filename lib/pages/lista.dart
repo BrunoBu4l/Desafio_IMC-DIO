@@ -18,9 +18,10 @@ class Lista extends StatelessWidget {
           separatorBuilder: (_, __) => const Divider(),
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              leading: Text(ultimasConsultas[index].altura.toString()),
-              title: Text(ultimasConsultas[index].peso.toString()),
-              trailing: Text(ultimasConsultas[index].classificacao),
+              leading: Text(ultimasConsultas[index].getAltura().toString()),
+              title: Text(ultimasConsultas[index].getPeso().toString()),
+              trailing:
+                  Text(ultimasConsultas[index].getClassificacao().toString()),
             );
           },
         ),

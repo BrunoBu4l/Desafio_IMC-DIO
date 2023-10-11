@@ -5,22 +5,28 @@ class IMC {
 
   IMC(this._peso, this._altura, this._classificacao);
 
-  String get classificacao => _classificacao;
-
-  set classificacao(String classificacao) {
-    _classificacao = classificacao;
+  void setClassificacao(String nome) {
+    _classificacao = nome;
   }
 
-  double get peso => _peso;
+  String getClassificacao() {
+    return _classificacao;
+  }
 
-  set peso(double peso) {
+  void setPeso(double peso) {
     _peso = peso;
   }
 
-  double get altura => _altura;
+  double getPeso() {
+    return _peso;
+  }
 
-  set altura(double altura) {
+  void setAltura(double altura) {
     _altura = altura;
+  }
+
+  double getAltura() {
+    return _altura;
   }
 
   @override

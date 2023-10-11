@@ -1,5 +1,4 @@
 import 'package:calculadora_imc/model/imc.dart';
-import 'package:calculadora_imc/pages/lista.dart';
 import 'package:calculadora_imc/repository/imc_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +26,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       setState(() {
         ultimasConsultas = newList;
-        massa = ultimasConsultas[ultimasConsultas.length - 1].classificacao;
+        massa =
+            ultimasConsultas[ultimasConsultas.length - 1].getClassificacao();
       });
     });
   }
@@ -88,14 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: TextButton(
                   onPressed: () async {
                     await _reloadList();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Sua massa corporal é $massa'),
-                    ));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((_) =>
-                                Lista(ultimasConsultas: ultimasConsultas))));
                   },
                   child: const Text(
                     "Calcular",
@@ -103,29 +95,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              // const SizedBox(height: 20),
-              // Visibility(
-              //     visible: ultimasConsultas.isNotEmpty,
-              //     replacement: const Center(
-              //       child: Text('Não tem nada.'),
-              //     ),
-              //     child: RefreshIndicator(
-              //       onRefresh: _reloadList,
-              //       child: ListView.separated(
-              //         itemBuilder: (BuildContext context, int index) {
-              //           print(ultimasConsultas[index].altura);
-              //           return ListTile(
-              //             leading:
-              //                 Text(ultimasConsultas[index].altura.toString()),
-              //             title: Text(ultimasConsultas[index].peso.toString()),
-              //             trailing: Text(ultimasConsultas[index].classificacao),
-              //           );
-              //         },
-              //         padding: const EdgeInsets.all(16),
-              //         separatorBuilder: (_, __) => const Divider(),
-              //         itemCount: ultimasConsultas.length,
-              //       ),
-              //     ))
+              const SizedBox(height: 20),
+              Visibility(
+                  visible: ultimasConsultas.isNotEmpty,
+                  replacement: const Center(
+                    child: Text('Não tem nada.'),
+                  ),
+                  child: RefreshIndicator(
+                    onRefresh: _reloadList,
+                    child: ListView.separated(
+                      itemBuilder: (BuildContext context, int index) {
+                        //debugPrint(ultimasConsultas[index].getAltura());
+                        return ListTile(
+                          leading: Text(
+                              ultimasConsultas[index].getAltura().toString()),
+                          title: Text(
+                              ultimasConsultas[index].getPeso().toString()),
+                          trailing: Text(ultimasConsultas[index]
+                              .getClassificacao()
+                              .toString()),
+                        );
+                      },
+                      padding: const EdgeInsets.all(16),
+                      separatorBuilder: (_, __) => const Divider(),
+                      itemCount: ultimasConsultas.length,
+                    ),
+                  ))
             ]),
           ]),
         ),
